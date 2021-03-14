@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2021_03_14_010834) do
 
   create_table "pet_histories", force: :cascade do |t|
     t.float "weight"
-    t.string "height"
+    t.float "height"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

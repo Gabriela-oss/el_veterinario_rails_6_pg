@@ -7,7 +7,7 @@ class ClientsController < ApplicationController
   end
 
   def show
-  
+  end 
     
   # GET /clients/new
   def new
@@ -62,7 +62,7 @@ class ClientsController < ApplicationController
   def set_client
     @client = Client.find(params[:id])
   end
-  
+
   # Only allow a list of trusted parameters through.
   def client_params
     params.require(:client).permit(:name, :telephone_number, :email, :pet_name)
