@@ -1,22 +1,23 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: %i[ show edit update destroy ]
 
-
+  # GET /clients or /clients.json
   def index
     @clients = Client.all
   end
 
-  # GET /clients/1 or /clients/1.json
   def show
-  end
-
+  
+    
   # GET /clients/new
   def new
     @client = Client.new
+    @pets = Pet.pluck :name, :id
   end
 
   # GET /clients/1/edit
   def edit
+    @pets = Pet.pluck :name, :id
   end
 
   # POST /clients or /clients.json
@@ -44,17 +45,26 @@ class ClientsController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
-    end 
-  end 
+    end
+  end
+
+  # DELETE /clients/1 or /clients/1.json
+  def destroy
+    @client.destroy
+    respond_to do |format|
+      format.html { redirect_to clients_url, notice: "Client was successfully destroyed." }
+      format.json { head :no_content }
+    end
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.
-  def set_pet_history
-    @pet_history = PetHistory.find(params[:id])
-  end 
-
-  # Only allow a list of trusted parameters through.
-  def pet_history_params
-    params.require(:pet_history).permit(:weight, :height, :description)
+  def set_client
+    @client = Client.find(params[:id])
   end
-end 
+  
+  # Only allow a list of trusted parameters through.
+  def client_params
+    params.require(:client).permit(:name, :telephone_number, :email, :pet_name)
+  end
+end

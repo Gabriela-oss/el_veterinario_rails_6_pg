@@ -1,28 +1,24 @@
 class PetHistoriesController < ApplicationController
   before_action :set_pet_history, only: %i[ show edit update destroy ]
-
   # GET /pet_histories or /pet_histories.json
   def index
     @pet_histories = PetHistory.all
   end
-
   # GET /pet_histories/1 or /pet_histories/1.json
   def show
   end
-
   # GET /pet_histories/new
   def new
     @pet_history = PetHistory.new
+    @pets = Pet.pluck :name, :id
   end
-
   # GET /pet_histories/1/edit
   def edit
+    @pets = Pet.pluck :name, :id
   end
-
   # POST /pet_histories or /pet_histories.json
   def create
     @pet_history = PetHistory.new(pet_history_params)
-
     respond_to do |format|
       if @pet_history.save
         format.html { redirect_to @pet_history, notice: "Pet history was successfully created." }
@@ -33,7 +29,6 @@ class PetHistoriesController < ApplicationController
       end
     end
   end
-
   # PATCH/PUT /pet_histories/1 or /pet_histories/1.json
   def update
     respond_to do |format|
@@ -46,7 +41,6 @@ class PetHistoriesController < ApplicationController
       end
     end
   end
-
   # DELETE /pet_histories/1 or /pet_histories/1.json
   def destroy
     @pet_history.destroy
@@ -55,15 +49,13 @@ class PetHistoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pet_history
       @pet_history = PetHistory.find(params[:id])
     end
-
     # Only allow a list of trusted parameters through.
     def pet_history_params
-      params.require(:pet_history).permit(:weight, :height, :description)
+      params.require(:pet_history).permit(:weight, :height, :description, :pet_id)
     end
 end
